@@ -1,0 +1,22 @@
+server:
+  port: 60001
+
+spring:
+  application:
+    name: auth-gateway
+  #  profiles:
+  #    active: local
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+
+    # Spring Cloud Gateway 配置项，对应 GatewayProperties 类
+    gateway:
+      routes:
+        # 权限服务，管理员接口
+        - id: auth-permission-admin # 路由的编号
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - path=/admin-api/permission/**
+        - id: auth-permission-app # 路由的编号
+          predicates:
+            - path=/app-api/permission/**

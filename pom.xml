@@ -5,11 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.auth.cloud</groupId>
-    <artifactId>auth</artifactId>
-    <version>${revision}</version>
+    <artifactId>auth-cloud</artifactId>
+    <version>${auth.cloud.version}</version>
     <packaging>pom</packaging>
     <modules>
         <module>auth-dependencies</module>
+        <module>auth-framework</module>
+        <module>auth-permission</module>
+        <module>auth-gateway</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -17,7 +20,8 @@
     <url>https://github.com/</url>
 
     <properties>
-        <revision>0.0.1-snapshot</revision>
+        <auth.cloud.version>0.0.1-snapshot</auth.cloud.version>
+        <spring.boot.version>2.7.17</spring.boot.version>
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
