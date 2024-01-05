@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.auth.cloud.i18n.utils.SpringContextUtil,\
+    com.auth.cloud.i18n.config.LocaleConfig
