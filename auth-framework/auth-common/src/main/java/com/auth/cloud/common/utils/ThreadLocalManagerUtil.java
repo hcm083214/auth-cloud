@@ -1,7 +1,8 @@
 package com.auth.cloud.common.utils;
 
-import com.auth.cloud.common.enums.LanguageEnum;
 import lombok.Data;
+
+import java.util.Locale;
 
 /**
  * 线程本地变量管理工具类
@@ -21,7 +22,7 @@ public class ThreadLocalManagerUtil {
     private static final ThreadLocal<HeaderInfo> THREAD_LOCAL = new ThreadLocal<>();
 
     public static String getLanguage() {
-        return THREAD_LOCAL.get().getLanguage() == null ? LanguageEnum.CHINESE.getLanguage() : THREAD_LOCAL.get().getLanguage();
+        return THREAD_LOCAL.get().getLanguage() == null ? Locale.getDefault().getLanguage() : THREAD_LOCAL.get().getLanguage();
     }
 
     public static String getToken() {

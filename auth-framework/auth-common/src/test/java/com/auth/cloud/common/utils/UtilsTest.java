@@ -1,6 +1,5 @@
 package com.auth.cloud.common.utils;
 
-import com.auth.cloud.common.enums.LanguageEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

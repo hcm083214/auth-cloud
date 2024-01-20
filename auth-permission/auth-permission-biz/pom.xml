@@ -20,6 +20,7 @@
             <artifactId>auth-spring-boot-starter-i18n</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
+
     </dependencies>
 
 </project>
