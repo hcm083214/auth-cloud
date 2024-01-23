@@ -1,4 +1,0 @@
-spring:
-  banner:
-    charset:  UTF-8 # 设置字符集
-debug: false

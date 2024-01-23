@@ -9,36 +9,85 @@
     <groupId>com.cloud.auth</groupId>
     <artifactId>auth-permission</artifactId>
     <version>0.0.1-snapshot</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>auth-permission-api</module>
-        <module>auth-permission-biz</module>
-    </modules>
+    <packaging>jar</packaging>
     <name>auth-permission</name>
     <description>权限管理和查询</description>
     <url>http://maven.apache.org</url>
 
     <dependencies>
+        <!-- 添加其他依赖 -->
         <dependency>
             <groupId>com.cloud.auth</groupId>
             <artifactId>auth-common</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
+        <dependency>
+            <groupId>com.cloud.auth</groupId>
+            <artifactId>auth-spring-boot-starter-i18n</artifactId>
+            <version>0.0.1-snapshot</version>
+        </dependency>
 
+        <!-- SpringWeb模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <!-- SpringWeb模块 -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--    DB 相关    -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--   工具类  -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
     </dependencies>
 
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

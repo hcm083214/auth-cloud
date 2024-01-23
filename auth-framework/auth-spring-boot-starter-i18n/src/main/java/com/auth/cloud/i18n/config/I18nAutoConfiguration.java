@@ -1,7 +1,7 @@
 package com.auth.cloud.i18n.config;
 
 
-import com.auth.cloud.i18n.utils.I18n;
+import com.auth.cloud.i18n.core.I18n;
 import com.auth.cloud.i18n.utils.SpringContextUtil;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;

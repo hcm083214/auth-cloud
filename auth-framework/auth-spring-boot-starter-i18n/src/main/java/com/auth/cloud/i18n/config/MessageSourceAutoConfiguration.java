@@ -29,7 +29,6 @@ public class MessageSourceAutoConfiguration {
 
     @Bean
     public ResourceBundleMessageSource messageSource() {
-        System.out.println("test");
         Locale.setDefault(Locale.CHINA);
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());

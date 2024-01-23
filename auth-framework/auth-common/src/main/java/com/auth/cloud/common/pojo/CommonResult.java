@@ -24,6 +24,7 @@ public class CommonResult<T> {
      * 返回对象
      */
     private T data;
+
     public static <T> CommonResult<T> success(T data){
         CommonResult<T> result = new CommonResult<>();
         result.data = data;
