@@ -17,6 +17,4 @@ spring:
         - id: auth-permission-admin # 路由的编号
           predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
             - path=/admin-api/permission/**
-        - id: auth-permission-app # 路由的编号
-          predicates:
             - path=/app-api/permission/**

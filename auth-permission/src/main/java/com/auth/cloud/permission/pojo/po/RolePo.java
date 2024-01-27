@@ -15,7 +15,7 @@ import lombok.Data;
 public class RolePo extends Base {
 
     /**
-     * 角色ID
+     * 角色ID，必须指定 tableId ，要不然和 id 相关的操作会报错
      */
     @TableId(type = IdType.AUTO)
     private Long roleId;

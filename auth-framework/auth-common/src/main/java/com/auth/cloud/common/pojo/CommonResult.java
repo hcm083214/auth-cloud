@@ -1,5 +1,6 @@
 package com.auth.cloud.common.pojo;
 
+import com.auth.cloud.i18n.core.I18nUtil;
 import lombok.Data;
 
 /**
@@ -28,6 +29,8 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> success(T data){
         CommonResult<T> result = new CommonResult<>();
         result.data = data;
+        result.code = 200;
+        result.msg = I18nUtil.get("success");
         return result;
     }
 }

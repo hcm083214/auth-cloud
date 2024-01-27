@@ -21,11 +21,6 @@
             <artifactId>auth-common</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
-        <dependency>
-            <groupId>com.cloud.auth</groupId>
-            <artifactId>auth-spring-boot-starter-i18n</artifactId>
-            <version>0.0.1-snapshot</version>
-        </dependency>
 
         <!-- SpringWeb模块 -->
         <dependency>

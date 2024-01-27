@@ -2,7 +2,6 @@ package com.auth.cloud.i18n.config;
 
 
 import com.auth.cloud.i18n.core.I18n;
-import com.auth.cloud.i18n.utils.SpringContextUtil;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +21,7 @@ public class I18nAutoConfiguration implements MessageSourceAware {
         this.messageSource = messageSource;
     }
 
-    @Deprecated
-    private static class Lazy {
-        // 使用懒加载方式实例化MessageSource对象
-        private final MessageSource messageSource = SpringContextUtil.getBean(MessageSource.class);
-    }
+
 
     @Bean
     public I18n i18n(){
