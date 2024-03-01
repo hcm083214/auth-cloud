@@ -11,7 +11,7 @@ import java.util.Locale;
  * @date 2024/01/20
  */
 public class I18n {
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     public I18n(MessageSource messageSource) {
         this.messageSource = messageSource;

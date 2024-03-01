@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("com.auth.cloud.permission.mapper")
-public class PermissionServerApplication {
+public class PermissionApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PermissionServerApplication.class, args);
+        SpringApplication.run(PermissionApplication.class, args);
     }
 }

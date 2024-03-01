@@ -14,7 +14,7 @@ spring:
     gateway:
       routes:
         # 权限服务，管理员接口
-        - id: auth-permission-admin # 路由的编号
+        - id: auth-permission # 路由的编号
           predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
             - path=/admin-api/permission/**
             - path=/app-api/permission/**

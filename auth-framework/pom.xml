@@ -25,6 +25,7 @@
     <modules>
         <module>auth-common</module>
         <module>auth-spring-boot-starter-i18n</module>
+        <module>auth-spring-boot-starter-web</module>
     </modules>
 
     <dependencies>

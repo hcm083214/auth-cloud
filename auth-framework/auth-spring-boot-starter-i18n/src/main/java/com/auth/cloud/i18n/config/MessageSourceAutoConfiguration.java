@@ -1,11 +1,9 @@
 package com.auth.cloud.i18n.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.util.Locale;
 
@@ -20,7 +18,7 @@ import java.util.Locale;
 @EnableConfigurationProperties(MessageSourceProperties.class)
 public class MessageSourceAutoConfiguration {
 
-    private MessageSourceProperties messageSourceProperties;
+    private final MessageSourceProperties messageSourceProperties;
 
     // 构建该自动配置类时将与配置文件绑定的配置类作为入参传递进去
     public MessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
@@ -28,9 +26,9 @@ public class MessageSourceAutoConfiguration {
     }
 
     @Bean
-    public ResourceBundleMessageSource messageSource() {
+    public ReloadableResourceBundleMessageSource messageSource() {
         Locale.setDefault(Locale.CHINA);
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());
         // 设置是否回退到系统本地
         messageSource.setFallbackToSystemLocale(false);

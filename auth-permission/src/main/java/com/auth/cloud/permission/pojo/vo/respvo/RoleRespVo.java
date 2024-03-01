@@ -1,6 +1,7 @@
 package com.auth.cloud.permission.pojo.vo.respvo;
 
 import com.auth.cloud.common.pojo.Base;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2024/01/21
  */
 @Data
+@Schema(description = "角色响应对象")
 public class RoleRespVo extends Base {
     /**
      * 角色ID

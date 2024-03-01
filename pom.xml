@@ -6,13 +6,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.auth.cloud</groupId>
     <artifactId>auth-cloud</artifactId>
-    <version>${auth.cloud.version}</version>
+    <version>0.0.1-snapshot</version>
     <packaging>pom</packaging>
     <modules>
         <module>auth-dependencies</module>
         <module>auth-framework</module>
-        <module>auth-permission</module>
         <module>auth-gateway</module>
+        <module>auth-grant</module>
+        <module>auth-permission</module>
     </modules>
 
     <name>${project.artifactId}</name>

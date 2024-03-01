@@ -4,6 +4,7 @@ import com.auth.cloud.common.pojo.Base;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_role")
+@Schema(description = "角色对象")
 public class RolePo extends Base {
 
     /**

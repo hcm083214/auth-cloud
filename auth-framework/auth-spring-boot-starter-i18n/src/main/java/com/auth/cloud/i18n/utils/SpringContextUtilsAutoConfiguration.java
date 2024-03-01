@@ -20,7 +20,6 @@ public class SpringContextUtilsAutoConfiguration implements ApplicationContextAw
     @Override
     //设置Spring上下文
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        System.out.println("SpringContextUtil.setApplicationContext()");
         //判断SpringContextUtil.applicationContext是否为空
         if (SpringContextUtilsAutoConfiguration.applicationContext == null) {
             //如果为空，将applicationContext赋值给SpringContextUtil.applicationContext
