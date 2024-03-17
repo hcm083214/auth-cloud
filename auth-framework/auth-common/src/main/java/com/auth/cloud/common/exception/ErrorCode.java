@@ -1,6 +1,7 @@
 package com.auth.cloud.common.exception;
 
 
+import com.auth.cloud.i18n.core.I18nUtil;
 import lombok.Data;
 
 /**
@@ -13,6 +14,6 @@ public class ErrorCode {
     public String message;
     public ErrorCode(Integer code,String message) {
         this.code = code;
-        this.message = message;
+        this.message = I18nUtil.get(message);
     }
 }

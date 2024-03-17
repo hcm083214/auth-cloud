@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class MessageSourceProperties {
 
     // 基础文件名
-    private String basename = "i18n/messages";
+    private String basename = "message";
 
     // 默认编码
     private String defaultEncoding = "UTF-8";

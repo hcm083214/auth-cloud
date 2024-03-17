@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2024/01/03
  */
 @SpringBootApplication
-@MapperScan("com.auth.cloud.permission.mapper")
 public class PermissionApplication {
     public static void main(String[] args) {
         SpringApplication.run(PermissionApplication.class, args);

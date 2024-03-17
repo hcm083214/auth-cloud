@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
 
@@ -26,9 +27,9 @@ public class MessageSourceAutoConfiguration {
     }
 
     @Bean
-    public ReloadableResourceBundleMessageSource messageSource() {
+    public ResourceBundleMessageSource  messageSource() {
         Locale.setDefault(Locale.CHINA);
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource ();
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());
         // 设置是否回退到系统本地
         messageSource.setFallbackToSystemLocale(false);

@@ -35,4 +35,9 @@ public class RoleRespVo extends Base {
      * 角色英文描述
      */
     private String roleDescriptionEn;
+
+    /**
+     * 排序
+     */
+    private Integer orderNum;
 }

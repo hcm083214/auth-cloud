@@ -10,7 +10,11 @@ spring:
       url: jdbc:mysql://localhost:3306/auth?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
       username: root
       password: 123456
-
+logging:
+  level:
+    root: info
+i18n:
+  basename: messages
 --- #################### 接口文档配置 ####################
 
 # springdoc-openapi项目配置
@@ -29,6 +33,8 @@ knife4j:
     language: zh_cn
 
 auth:
+  info:
+    mapper-base-package: com.auth.cloud.permission.mapper
   swagger:
     title: 管理后台
     description: 提供管理员管理的所有功能

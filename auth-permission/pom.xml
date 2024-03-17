@@ -15,14 +15,16 @@
 
     <dependencies>
         <!--  相关依赖      -->
+
+
         <dependency>
             <groupId>com.cloud.auth</groupId>
-            <artifactId>auth-common</artifactId>
+            <artifactId>auth-spring-boot-starter-web</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
         <dependency>
             <groupId>com.cloud.auth</groupId>
-            <artifactId>auth-spring-boot-starter-web</artifactId>
+            <artifactId>auth-spring-boot-starter-mybatis</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
 
@@ -41,19 +43,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--  db相关  -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
+
 
         <!--  工具类 -->
         <dependency>
