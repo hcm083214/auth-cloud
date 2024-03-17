@@ -33,9 +33,4 @@ public class Base implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
-    /**
-     * 是否删除,值为 0 表示未删除，值为 1 表示已删除
-     */
-    private Boolean deleted;
 }

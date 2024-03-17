@@ -29,6 +29,10 @@ public class SwaggerProperties {
      */
     private String version;
     /**
+     * termsOfService
+     */
+    private String termsOfService;
+    /**
      * url
      */
     private String url;
