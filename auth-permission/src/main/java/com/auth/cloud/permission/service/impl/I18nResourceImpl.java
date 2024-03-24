@@ -28,12 +28,12 @@ public class I18nResourceImpl
     @Autowired
     I18nResourceMapper i18nResourceMapper;
 
-    private List<I18nResourcePo> getI18nResources(List<I18nSearchReqVo> i18NSearchReqVos) {
+    private List<I18nResourcePo> getI18nResources(List<I18nSearchReqVo> i18nSearchReqVos) {
         QueryWrapper<I18nResourcePo> query = new QueryWrapper<>();
         Set<String> locales = new HashSet<>();
         Set<String> modules = new HashSet<>();
         Set<String> keys = new HashSet<>();
-        i18NSearchReqVos.forEach(i18nResourceReqVo -> {
+        i18nSearchReqVos.forEach(i18nResourceReqVo -> {
             locales.add(i18nResourceReqVo.getLocale());
             modules.add(i18nResourceReqVo.getI18nModule());
             keys.add(i18nResourceReqVo.getI18nKey());
@@ -137,24 +137,24 @@ public class I18nResourceImpl
     }
 
     @Override
-    public Page<I18nResourcePo> getI18nPageList(Page page, I18nSearchReqVo i18NSearchReqVo) {
+    public Page<I18nResourcePo> getI18nPageList(Page page, I18nSearchReqVo i18nSearchReqVo) {
         QueryWrapper<I18nResourcePo> query = new QueryWrapper();
-        query.like(StringUtils.isNotBlank(i18NSearchReqVo.getI18nModule()),
-                        "i18n_module", i18NSearchReqVo.getI18nModule())
-                .like(StringUtils.isNotBlank(i18NSearchReqVo.getI18nKey()),
-                        "i18n_key", i18NSearchReqVo.getI18nKey())
-                .eq(StringUtils.isNotBlank(i18NSearchReqVo.getLocale()),
-                        "locale", i18NSearchReqVo.getLocale());
+        query.like(StringUtils.isNotBlank(i18nSearchReqVo.getI18nModule()),
+                        "i18n_module", i18nSearchReqVo.getI18nModule())
+                .like(StringUtils.isNotBlank(i18nSearchReqVo.getI18nKey()),
+                        "i18n_key", i18nSearchReqVo.getI18nKey())
+                .eq(StringUtils.isNotBlank(i18nSearchReqVo.getLocale()),
+                        "locale", i18nSearchReqVo.getLocale());
         return i18nResourceMapper.selectPage(page, query);
     }
 
     @Override
-    public Integer addI18nResource(List<I18nSearchReqVo> i18NSearchReqVos) {
-        List<I18nResourcePo> i18nResources = getI18nResources(i18NSearchReqVos);
-        if (i18NSearchReqVos.isEmpty()) {
+    public Integer addI18nResource(List<I18nSearchReqVo> i18nSearchReqVos) {
+        List<I18nResourcePo> i18nResources = getI18nResources(i18nSearchReqVos);
+        if (i18nSearchReqVos.isEmpty()) {
             return 0;
         } else {
-            Map<String, List<I18nSearchReqVo>> filterMap = filterI18nResources(i18NSearchReqVos, i18nResources);
+            Map<String, List<I18nSearchReqVo>> filterMap = filterI18nResources(i18nSearchReqVos, i18nResources);
             insertBatch(filterMap.get("add"));
             updateBatch(filterMap.get("update"));
             return filterMap.get("add").size() + filterMap.get("update").size();

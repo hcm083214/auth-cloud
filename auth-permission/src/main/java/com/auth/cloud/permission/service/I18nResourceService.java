@@ -10,7 +10,7 @@ import java.util.List;
 public interface I18nResourceService {
     List<I18nResourcePo> getI18nList(String locale);
 
-    Page<I18nResourcePo> getI18nPageList(Page page, I18nSearchReqVo i18NSearchReqVo);
+    Page<I18nResourcePo> getI18nPageList(Page page, I18nSearchReqVo i18nSearchReqVo);
 
-    Integer addI18nResource(List<I18nSearchReqVo> i18NSearchReqVos);
+    Integer addI18nResource(List<I18nSearchReqVo> i18nSearchReqVos);
 }

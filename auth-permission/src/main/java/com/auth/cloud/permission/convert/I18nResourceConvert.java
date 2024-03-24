@@ -41,7 +41,7 @@ public interface I18nResourceConvert {
         return result;
     }
 
-    I18nResourcePo voToPo(I18nSearchReqVo i18NSearchReqVo);
+    I18nResourcePo voToPo(I18nSearchReqVo i18nSearchReqVo);
 
     /**
      * 将I18nResourceReqVo对象列表转换为I18nResourcePo对象列表。

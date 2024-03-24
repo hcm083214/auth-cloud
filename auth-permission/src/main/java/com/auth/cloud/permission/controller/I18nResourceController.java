@@ -42,21 +42,21 @@ public class I18nResourceController {
     @Operation(summary = "分页查询国际化资源", description = "根据条件分页查询国际化资源")
     @GetMapping("/list")
     public CommonResult<Page<I18nResourceRespVo>> getI18nResources(
-            @Validated(I18nSearchReqVo.PageGroup.class) I18nSearchReqVo i18NSearchReqVo) {
+           I18nSearchReqVo i18nSearchReqVo) {
         Page<I18nResourcePo> sysI18nList =
                 i18nResourceService.getI18nPageList(
-                        new Page<>(i18NSearchReqVo.getCurrent(), i18NSearchReqVo.getSize())
-                        , i18NSearchReqVo);
+                        new Page<>(i18nSearchReqVo.getCurrent(), i18nSearchReqVo.getSize())
+                        , i18nSearchReqVo);
         return CommonResult.success(I18nResourceConvert.INSTANCE.posToVos(sysI18nList));
     }
 
     @PostMapping
     @Operation(summary = "新增国际化资源", description = "新增国际化资源")
     public CommonResult<String> addI18nResource(
-             @RequestBody @Validated(I18nSearchReqVo.AddGroup.class) List<I18nSearchReqVo> i18NSearchReqVos) {
-        I18nResourceReqValidated.addListValidated(i18NSearchReqVos);
+              List<I18nSearchReqVo> i18nSearchReqVos) {
+        I18nResourceReqValidated.addListValidated(i18nSearchReqVos);
         try {
-            Integer addedCount = i18nResourceService.addI18nResource(i18NSearchReqVos);
+            Integer addedCount = i18nResourceService.addI18nResource(i18nSearchReqVos);
             String successMessage = I18nUtil.get("add.success", new Integer[]{addedCount});
             return CommonResult.success(successMessage);
         } catch (Exception e) {
