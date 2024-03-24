@@ -4,6 +4,7 @@ import com.auth.cloud.common.pojo.CommonResult;
 import com.auth.cloud.i18n.core.I18nUtil;
 import com.auth.cloud.permission.convert.I18nResourceConvert;
 import com.auth.cloud.permission.pojo.po.I18nResourcePo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.auth.cloud.permission.pojo.vo.respvo.I18nResourceRespVo;
 import com.auth.cloud.permission.service.I18nResourceService;
@@ -13,9 +14,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class I18nResourceController {
     @Operation(summary = "分页查询国际化资源", description = "根据条件分页查询国际化资源")
     @GetMapping("/list")
     public CommonResult<Page<I18nResourceRespVo>> getI18nResources(
-           I18nSearchReqVo i18nSearchReqVo) {
+           @Valid I18nSearchReqVo i18nSearchReqVo) {
         Page<I18nResourcePo> sysI18nList =
                 i18nResourceService.getI18nPageList(
                         new Page<>(i18nSearchReqVo.getCurrent(), i18nSearchReqVo.getSize())
@@ -53,10 +54,10 @@ public class I18nResourceController {
     @PostMapping
     @Operation(summary = "新增国际化资源", description = "新增国际化资源")
     public CommonResult<String> addI18nResource(
-              List<I18nSearchReqVo> i18nSearchReqVos) {
-        I18nResourceReqValidated.addListValidated(i18nSearchReqVos);
+          @RequestBody  @Valid List<I18nAddReqVo> i18nAddReqVos) {
+        I18nResourceReqValidated.addListValidated(i18nAddReqVos);
         try {
-            Integer addedCount = i18nResourceService.addI18nResource(i18nSearchReqVos);
+            Integer addedCount = i18nResourceService.addI18nResource(i18nAddReqVos);
             String successMessage = I18nUtil.get("add.success", new Integer[]{addedCount});
             return CommonResult.success(successMessage);
         } catch (Exception e) {

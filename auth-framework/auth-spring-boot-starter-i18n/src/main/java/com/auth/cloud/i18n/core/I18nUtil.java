@@ -1,7 +1,7 @@
 package com.auth.cloud.i18n.core;
 
+import com.auth.cloud.i18n.config.I18nAutoConfiguration;
 import com.auth.cloud.i18n.enums.LanguageEnum;
-import com.auth.cloud.i18n.utils.SpringContextUtilsAutoConfiguration;
 import org.springframework.context.MessageSource;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +15,7 @@ public class I18nUtil {
 
     private static class Lazy {
         // 使用懒加载方式实例化MessageSource对象
-        private static final MessageSource messageSource = SpringContextUtilsAutoConfiguration.getBean(MessageSource.class);
+        private static final MessageSource messageSource = I18nAutoConfiguration.getBean(MessageSource.class);
     }
 
     private static MessageSource getInstance() {

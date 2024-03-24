@@ -1,6 +1,7 @@
 package com.auth.cloud.permission.convert;
 
 import com.auth.cloud.permission.pojo.po.I18nResourcePo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.auth.cloud.permission.pojo.vo.respvo.I18nResourceRespVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,15 +42,9 @@ public interface I18nResourceConvert {
         return result;
     }
 
+    I18nResourcePo voToPo(I18nAddReqVo i18nAddReqVo);
     I18nResourcePo voToPo(I18nSearchReqVo i18nSearchReqVo);
-
-    /**
-     * 将I18nResourceReqVo对象列表转换为I18nResourcePo对象列表。
-     *
-     * @param reqVos I18nResourceReqVo对象列表，不可为null。
-     * @return 转换后的I18nResourcePo对象列表，如果输入为空，则返回空列表。
-     */
-    default List<I18nResourcePo> vosToPos(List<I18nSearchReqVo> reqVos) {
+    default List<I18nResourcePo> vosToPos(List<I18nAddReqVo> reqVos) {
         if (reqVos == null || reqVos.size() == 0) {
             return new ArrayList<>();
         }
@@ -57,6 +52,5 @@ public interface I18nResourceConvert {
                 .map(I18nResourceConvert.INSTANCE::voToPo)
                 .collect(Collectors.toList());
     }
-
 
 }

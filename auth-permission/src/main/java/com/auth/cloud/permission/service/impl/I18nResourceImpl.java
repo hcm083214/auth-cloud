@@ -1,7 +1,9 @@
 package com.auth.cloud.permission.service.impl;
 
+import com.auth.cloud.permission.convert.I18nResourceConvert;
 import com.auth.cloud.permission.mapper.I18nResourceMapper;
 import com.auth.cloud.permission.pojo.po.I18nResourcePo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.auth.cloud.permission.service.I18nResourceService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -28,7 +30,7 @@ public class I18nResourceImpl
     @Autowired
     I18nResourceMapper i18nResourceMapper;
 
-    private List<I18nResourcePo> getI18nResources(List<I18nSearchReqVo> i18nSearchReqVos) {
+    private  List<I18nResourcePo> getI18nResources(List<I18nAddReqVo> i18nSearchReqVos) {
         QueryWrapper<I18nResourcePo> query = new QueryWrapper<>();
         Set<String> locales = new HashSet<>();
         Set<String> modules = new HashSet<>();
@@ -44,9 +46,9 @@ public class I18nResourceImpl
         return i18nResourceMapper.selectList(query);
     }
 
-    private void addListToMap(Map<String, List<I18nSearchReqVo>> map, String key, I18nSearchReqVo vo) {
-        List<I18nSearchReqVo> vos = map.get(key);
-        vos.add(vo);
+    private void addListToMap(Map<String, List<I18nResourcePo>> map, String key, I18nResourcePo po) {
+        List<I18nResourcePo> pos = map.get(key);
+        pos.add(po);
     }
 
     /**
@@ -60,10 +62,10 @@ public class I18nResourceImpl
      * @return 返回一个映射，包含两类资源："add"列表中的资源表示需新增的资源，"update"列表中的资源表示需更新的资源。
      */
 
-    private Map<String, List<I18nSearchReqVo>> filterI18nResources(List<I18nSearchReqVo> vos, List<I18nResourcePo> pos) {
-        Map<String, List<I18nSearchReqVo>> map = new HashMap<>();
+    private Map<String, List<I18nResourcePo>> filterI18nResources(List<I18nAddReqVo> vos, List<I18nResourcePo> pos) {
+        Map<String, List<I18nResourcePo>> map = new HashMap<>();
         if (pos.isEmpty()) {
-            map.put("add", vos);
+            map.put("add", I18nResourceConvert.INSTANCE.vosToPos(vos));
             return map;
         } else {
             Set<String> keys = new HashSet<>();
@@ -75,58 +77,44 @@ public class I18nResourceImpl
             vos.forEach(vo -> {
                 String key = vo.getLocale() + vo.getI18nModule() + vo.getI18nKey();
                 if (!keys.contains(key)) {
-                    addListToMap(map, "add", vo);
+                    addListToMap(map, "add", I18nResourceConvert.INSTANCE.voToPo(vo));
                 } else {
                     pos.stream().forEach((po) -> {
                         String k = po.getLocale() + po.getI18nModule() + po.getI18nKey();
                         if (k.equals(key)) {
-                            vo.setI18nId(po.getI18nId());
+                            po.setI18nValue(vo.getI18nValue());
+                            addListToMap(map, "update", po);
                         }
                     });
-                    addListToMap(map, "update", vo);
+
                 }
             });
         }
         return map;
     }
 
-    private Boolean insertBatch(List<I18nSearchReqVo> vos) {
-        List<I18nResourcePo> i18nResourcePos = new ArrayList<>();
-        if (vos.isEmpty()) {
+    private Boolean insertBatch(List<I18nResourcePo> pos) {
+        if (pos.isEmpty()) {
             return true;
         }
-        vos.forEach(i18nResourceReqVo -> {
-            I18nResourcePo i18nResourcePo = new I18nResourcePo();
-            Optional.ofNullable(i18nResourceReqVo.getLocale()).ifPresent(locale -> i18nResourcePo.setLocale(locale));
-            Optional.ofNullable(i18nResourceReqVo.getI18nModule()).ifPresent(i18nModule -> i18nResourcePo.setI18nModule(i18nModule));
-            Optional.ofNullable(i18nResourceReqVo.getI18nKey()).ifPresent(i18nKey -> i18nResourcePo.setI18nKey(i18nKey));
-            Optional.ofNullable(i18nResourceReqVo.getI18nValue()).ifPresent(i18nValue -> i18nResourcePo.setI18nValue(i18nValue));
-            i18nResourcePo.setCreateTime(LocalDateTime.now());
-            i18nResourcePo.setUpdateTime(LocalDateTime.now());
-            i18nResourcePos.add(i18nResourcePo);
+        pos.forEach(po -> {
+            po.setCreateTime(LocalDateTime.now());
+            po.setUpdateTime(LocalDateTime.now());
         });
-        log.info("sys_i18n_resource insertBatch {},i18nResourcePos: {}", i18nResourcePos.size(), i18nResourcePos);
-        return saveBatch(i18nResourcePos);
-//        return i18nResourceMapper.insertBatchSomeColumn(i18nResourcePos);
+        log.info("sys_i18n_resource insertBatch {},i18nResourcePos: {}", pos.size(), pos);
+        return saveBatch(pos);
+        // return i18nResourceMapper.insertBatchSomeColumn(i18nResourcePos);
     }
 
-    private Boolean updateBatch(List<I18nSearchReqVo> vos) {
-        List<I18nResourcePo> i18nResourcePos = new ArrayList<>();
-        if (vos.isEmpty()) {
+    private Boolean updateBatch(List<I18nResourcePo> pos) {
+        if (pos.isEmpty()) {
             return true;
         }
-        vos.forEach(i18nResourceReqVo -> {
-            I18nResourcePo i18nResourcePo = new I18nResourcePo();
-            Optional.ofNullable(i18nResourceReqVo.getI18nId()).ifPresent(i18nId -> i18nResourcePo.setI18nId(i18nId));
-            Optional.ofNullable(i18nResourceReqVo.getLocale()).ifPresent(locale -> i18nResourcePo.setLocale(locale));
-            Optional.ofNullable(i18nResourceReqVo.getI18nModule()).ifPresent(i18nModule -> i18nResourcePo.setI18nModule(i18nModule));
-            Optional.ofNullable(i18nResourceReqVo.getI18nKey()).ifPresent(i18nKey -> i18nResourcePo.setI18nKey(i18nKey));
-            i18nResourcePo.setUpdateTime(LocalDateTime.now());
-            Optional.ofNullable(i18nResourceReqVo.getI18nValue()).ifPresent(i18nValue -> i18nResourcePo.setI18nValue(i18nValue));
-            i18nResourcePos.add(i18nResourcePo);
+        pos.forEach(po -> {
+            po.setUpdateTime(LocalDateTime.now());
         });
-        log.info("sys_i18n_resource updateBatch {},i18nResourcePos: {}", i18nResourcePos.size(), i18nResourcePos);
-        return updateBatchById(i18nResourcePos);
+        log.info("sys_i18n_resource updateBatch {},i18nResourcePos: {}", pos.size(), pos);
+        return updateBatchById(pos);
     }
 
     @Override
@@ -149,12 +137,12 @@ public class I18nResourceImpl
     }
 
     @Override
-    public Integer addI18nResource(List<I18nSearchReqVo> i18nSearchReqVos) {
-        List<I18nResourcePo> i18nResources = getI18nResources(i18nSearchReqVos);
-        if (i18nSearchReqVos.isEmpty()) {
+    public Integer addI18nResource(List<I18nAddReqVo> i18nAddReqVos) {
+        List<I18nResourcePo> i18nResources = getI18nResources(i18nAddReqVos);
+        if (i18nAddReqVos.isEmpty()) {
             return 0;
         } else {
-            Map<String, List<I18nSearchReqVo>> filterMap = filterI18nResources(i18nSearchReqVos, i18nResources);
+            Map<String, List<I18nResourcePo>> filterMap = filterI18nResources(i18nAddReqVos, i18nResources);
             insertBatch(filterMap.get("add"));
             updateBatch(filterMap.get("update"));
             return filterMap.get("add").size() + filterMap.get("update").size();

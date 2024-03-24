@@ -1,7 +1,7 @@
 package com.auth.cloud.permission.validated;
 
 import com.auth.cloud.common.exception.BadRequestException;
-import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
 
 
 import java.util.List;
@@ -13,22 +13,22 @@ import java.util.List;
  */
 public class I18nResourceReqValidated {
 
-    public static void addValidated(I18nSearchReqVo i18nSearchReqVo) {
-        if (i18nSearchReqVo.getI18nModule() == null) {
+    public static void addValidated(I18nAddReqVo i18nAddReqVo) {
+        if (i18nAddReqVo.getI18nModule() == null) {
             throw new BadRequestException("i18nModule 未传");
         }
-        if (i18nSearchReqVo.getI18nValue() == null) {
+        if (i18nAddReqVo.getI18nValue() == null) {
             throw new BadRequestException("i18nValue 未传");
         }
-        if (i18nSearchReqVo.getLocale() == null) {
+        if (i18nAddReqVo.getLocale() == null) {
             throw new BadRequestException("locale 未传");
         }
     }
 
-    public static void addListValidated(List<I18nSearchReqVo> i18nSearchReqVos) {
-        if (i18nSearchReqVos == null || i18nSearchReqVos.isEmpty()) {
+    public static void addListValidated(List<I18nAddReqVo> i18nAddReqVos) {
+        if (i18nAddReqVos == null || i18nAddReqVos.isEmpty()) {
             throw new BadRequestException("i18nResourceReqVos 未传");
         }
-        i18nSearchReqVos.forEach(i18nResourceReqVo -> addValidated(i18nResourceReqVo));
+        i18nAddReqVos.forEach(i18nAddReqVo -> addValidated(i18nAddReqVo));
     }
 }
