@@ -4,6 +4,7 @@ import com.auth.cloud.permission.convert.I18nResourceConvert;
 import com.auth.cloud.permission.mapper.I18nResourceMapper;
 import com.auth.cloud.permission.pojo.po.I18nResourcePo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nEditReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.auth.cloud.permission.service.I18nResourceService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author 黄灿民
@@ -30,25 +33,44 @@ public class I18nResourceImpl
     @Autowired
     I18nResourceMapper i18nResourceMapper;
 
-    private  List<I18nResourcePo> getI18nResources(List<I18nAddReqVo> i18nSearchReqVos) {
+    private List<I18nResourcePo> getI18nResources(List<I18nAddReqVo> i18nSearchReqVos) {
+        if (i18nSearchReqVos == null || i18nSearchReqVos.isEmpty()) {
+            // 可以选择返回空列表，或者抛出一个异常，视业务规则而定
+            return new ArrayList<>();
+        }
         QueryWrapper<I18nResourcePo> query = new QueryWrapper<>();
-        Set<String> locales = new HashSet<>();
-        Set<String> modules = new HashSet<>();
-        Set<String> keys = new HashSet<>();
-        i18nSearchReqVos.forEach(i18nResourceReqVo -> {
-            locales.add(i18nResourceReqVo.getLocale());
-            modules.add(i18nResourceReqVo.getI18nModule());
-            keys.add(i18nResourceReqVo.getI18nKey());
-        });
-        query.in("locale", locales)
-                .in("i18n_module", modules)
-                .in("i18n_key", keys);
-        return i18nResourceMapper.selectList(query);
-    }
+        // 使用Stream API进行参数收集，提高代码的可读性
+        Set<String> locales = i18nSearchReqVos.stream()
+                .map(I18nAddReqVo::getLocale)
+                .filter(locale -> locale != null && !locale.isEmpty())
+                .collect(Collectors.toSet());
 
-    private void addListToMap(Map<String, List<I18nResourcePo>> map, String key, I18nResourcePo po) {
-        List<I18nResourcePo> pos = map.get(key);
-        pos.add(po);
+        Set<String> modules = i18nSearchReqVos.stream()
+                .map(I18nAddReqVo::getI18nModule)
+                .filter(module -> module != null && !module.isEmpty())
+                .collect(Collectors.toSet());
+
+        Set<String> keys = i18nSearchReqVos.stream()
+                .map(I18nAddReqVo::getI18nKey)
+                .filter(key -> key != null && !key.isEmpty())
+                .collect(Collectors.toSet());
+        // 构建查询条件，防止条件为空导致的全量查询
+        if (!locales.isEmpty()) {
+            query.in("locale", locales);
+        }
+        if (!modules.isEmpty()) {
+            query.in("i18n_module", modules);
+        }
+        if (!keys.isEmpty()) {
+            query.in("i18n_key", keys);
+        }
+        try {
+            return i18nResourceMapper.selectList(query);
+        } catch (Exception e) {
+            // 日志记录异常，可以使用Log4j或SLF4J等
+            log.error("查询I18n资源出错", e);
+            return new ArrayList<>(); // 根据业务需求，可以选择抛出异常或返回空列表
+        }
     }
 
     /**
@@ -65,28 +87,34 @@ public class I18nResourceImpl
     private Map<String, List<I18nResourcePo>> filterI18nResources(List<I18nAddReqVo> vos, List<I18nResourcePo> pos) {
         Map<String, List<I18nResourcePo>> map = new HashMap<>();
         if (pos.isEmpty()) {
-            map.put("add", I18nResourceConvert.INSTANCE.vosToPos(vos));
+            try {
+                map.put("add", I18nResourceConvert.INSTANCE.addVosToPos(vos));
+            } catch (Exception e) {
+                // 异常处理，例如记录日志
+                e.printStackTrace();
+                // 可以选择返回空映射或包含错误信息的映射
+                return map;
+            }
             return map;
         } else {
-            Set<String> keys = new HashSet<>();
-            pos.forEach(po -> {
-                keys.add(po.getLocale() + po.getI18nModule() + po.getI18nKey());
-            });
+            // 使用HashMap提升查找效率
+            Map<String, I18nResourcePo> posMap = pos.stream()
+                    .collect(Collectors.toMap(
+                            po -> po.getLocale() + po.getI18nModule() + po.getI18nKey(),
+                            Function.identity()));
+
             map.put("add", new ArrayList<>());
             map.put("update", new ArrayList<>());
             vos.forEach(vo -> {
                 String key = vo.getLocale() + vo.getI18nModule() + vo.getI18nKey();
-                if (!keys.contains(key)) {
-                    addListToMap(map, "add", I18nResourceConvert.INSTANCE.voToPo(vo));
+                if (!posMap.containsKey(key)) {
+                    // 新增资源
+                    map.get("add").add(I18nResourceConvert.INSTANCE.voToPo(vo));
                 } else {
-                    pos.stream().forEach((po) -> {
-                        String k = po.getLocale() + po.getI18nModule() + po.getI18nKey();
-                        if (k.equals(key)) {
-                            po.setI18nValue(vo.getI18nValue());
-                            addListToMap(map, "update", po);
-                        }
-                    });
-
+                    // 更新资源
+                    I18nResourcePo po = posMap.get(key);
+                    po.setI18nValue(vo.getI18nValue());
+                    map.get("update").add(po);
                 }
             });
         }
@@ -143,9 +171,23 @@ public class I18nResourceImpl
             return 0;
         } else {
             Map<String, List<I18nResourcePo>> filterMap = filterI18nResources(i18nAddReqVos, i18nResources);
-            insertBatch(filterMap.get("add"));
-            updateBatch(filterMap.get("update"));
-            return filterMap.get("add").size() + filterMap.get("update").size();
+            Optional.ofNullable(filterMap.get("add")).ifPresent(this::insertBatch);
+            Optional.ofNullable(filterMap.get("update")).ifPresent(this::updateBatch);
+            return i18nAddReqVos.size();
         }
+    }
+
+    @Override
+    public void editI18nResource(I18nEditReqVo i18nEditReqVo) {
+        I18nResourcePo i18nResourcePo = I18nResourceConvert.INSTANCE.voToPo(i18nEditReqVo);
+        List<I18nResourcePo> i18nResourcePos = new ArrayList<>();
+        i18nResourcePos.add(i18nResourcePo);
+        updateBatch(i18nResourcePos);
+    }
+
+    @Override
+    public void deleteI18nResource(Long i18nId) {
+        log.info("sys_i18n_resource deleteI18nResource i18nId: {}", i18nId);
+        Integer i = i18nResourceMapper.deleteById(i18nId);
     }
 }

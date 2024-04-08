@@ -2,6 +2,7 @@ package com.auth.cloud.permission.convert;
 
 import com.auth.cloud.permission.pojo.po.I18nResourcePo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
+import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nEditReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.auth.cloud.permission.pojo.vo.respvo.I18nResourceRespVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,8 +44,18 @@ public interface I18nResourceConvert {
     }
 
     I18nResourcePo voToPo(I18nAddReqVo i18nAddReqVo);
+    I18nResourcePo voToPo(I18nEditReqVo i18nEditReqVo);
     I18nResourcePo voToPo(I18nSearchReqVo i18nSearchReqVo);
-    default List<I18nResourcePo> vosToPos(List<I18nAddReqVo> reqVos) {
+    default List<I18nResourcePo> addVosToPos(List<I18nAddReqVo> reqVos) {
+        if (reqVos == null || reqVos.size() == 0) {
+            return new ArrayList<>();
+        }
+        return reqVos.stream()
+                .map(I18nResourceConvert.INSTANCE::voToPo)
+                .collect(Collectors.toList());
+    }
+
+    default List<I18nResourcePo> editVosToPos(List<I18nEditReqVo> reqVos) {
         if (reqVos == null || reqVos.size() == 0) {
             return new ArrayList<>();
         }
