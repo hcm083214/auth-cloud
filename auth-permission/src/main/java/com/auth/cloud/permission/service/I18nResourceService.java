@@ -6,10 +6,11 @@ import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nAddReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nEditReqVo;
 import com.auth.cloud.permission.pojo.vo.reqvo.i18n.I18nSearchReqVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
-public interface I18nResourceService {
+public interface I18nResourceService extends IService<I18nResourcePo>  {
     List<I18nResourcePo> getI18nList(String locale);
 
     Page<I18nResourcePo> getI18nPageList(Page page, I18nSearchReqVo i18nSearchReqVo);

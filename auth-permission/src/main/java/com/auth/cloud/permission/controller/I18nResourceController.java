@@ -28,13 +28,21 @@ import java.util.List;
  * @date 2024/03/17
  */
 @RestController
-@Tag(name = "国际化资源管理", description = "国际化资源管理相关接口")
-@RequestMapping("i18n")
+@Tag(name = "国际化语言资源管理", description = "国际化语言资源管理相关接口")
+@RequestMapping("/language")
 @Slf4j
 public class I18nResourceController {
 
     @Autowired
     private I18nResourceService i18nResourceService;
+
+    @GetMapping("/locale")
+    @Operation(summary = "国际化语言包获取", description = "根据语言环境获取国际化语言包")
+    public CommonResult<List<I18nResourceRespVo>> getI18nPackageByLocale() {
+        List<I18nResourcePo> sysI18nList = i18nResourceService.list();
+        List<I18nResourceRespVo> i18nResourceRespVos = I18nResourceConvert.INSTANCE.posToVos(sysI18nList);
+        return CommonResult.success(i18nResourceRespVos);
+    }
 
     @GetMapping("/locale/{locale}")
     @Operation(summary = "国际化语言包获取", description = "根据语言环境获取国际化语言包")
@@ -54,7 +62,7 @@ public class I18nResourceController {
         return CommonResult.success(I18nResourceConvert.INSTANCE.posToVos(sysI18nList));
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @Operation(summary = "新增国际化资源", description = "新增国际化资源")
     public CommonResult<String> addI18nResource(
           @RequestBody @Valid List<I18nAddReqVo> i18nAddReqVos) {
@@ -69,7 +77,7 @@ public class I18nResourceController {
         }
     }
 
-    @PostMapping("/i18n_id/{i18nId}")
+    @DeleteMapping("/i18n_id/{i18nId}")
     @Operation(summary = "删除国际化资源", description = "删除国际化资源")
     public CommonResult<String> deleteI18nResource(@PathVariable("i18nId") @Valid
                                                        @NotNull(message = "i18nId不能为空")
@@ -79,7 +87,7 @@ public class I18nResourceController {
         return CommonResult.success(successMessage);
     }
 
-    @PostMapping("/edit")
+    @PutMapping()
     @Operation(summary = "更新国际化资源", description = "更新国际化资源")
     public CommonResult<String> editI18nResource(@RequestBody @Valid I18nEditReqVo i18nEditReqVo) {
         try {
