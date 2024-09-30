@@ -1,0 +1,42 @@
+server:
+  port: 6002
+spring:
+  application:
+    name: permission
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/auth?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
+logging:
+  level:
+    root: info
+i18n:
+  basename: messages
+--- #################### 接口文档配置 ####################
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+auth:
+  info:
+    mapper-base-package: com.auth.cloud.permission.mapper
+  swagger:
+    title: 管理后台
+    description: 提供管理员管理的所有功能
+    version: 1.0.0
+    base-package: com.auth.cloud.permission
