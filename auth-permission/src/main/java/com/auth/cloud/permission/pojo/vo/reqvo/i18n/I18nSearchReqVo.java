@@ -1,6 +1,5 @@
 package com.auth.cloud.permission.pojo.vo.reqvo.i18n;
 
-import com.auth.cloud.common.pojo.Base;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

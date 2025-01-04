@@ -12,7 +12,7 @@ import lombok.Data;
  * @date 2024/03/17
  */
 @Data
-@TableName("sys_i18n_resource")
+@TableName("sys_language")
 @Schema(description = "国际化资源")
 public class I18nResourcePo extends Base {
     /**

@@ -14,7 +14,7 @@
     <description>权限设计和查询模块</description>
 
     <dependencies>
-        <!--  相关依赖      -->
+        <!--  相关依赖  -->
         <dependency>
             <groupId>com.cloud.auth</groupId>
             <artifactId>auth-common</artifactId>
@@ -46,10 +46,16 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
-
-        <!--  工具类 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!-- 引入openfeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--  工具类  -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

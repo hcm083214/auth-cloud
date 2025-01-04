@@ -12,5 +12,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Tag(name = "权限管理后台 - 资源", description = "页面和按钮资源查询相关接口")
 public class ResourceController {
 
-    public CommonResult<>
+
 }

@@ -1,6 +1,5 @@
 server:
-  port: 60001
-
+  port: 6001
 spring:
   application:
     name: auth-gateway
@@ -15,6 +14,11 @@ spring:
       routes:
         # 权限服务，管理员接口
         - id: auth-permission # 路由的编号
+          uri: http://localhost:6002
           predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
-            - path=/admin-api/permission/**
-            - path=/app-api/permission/**
+            - Path=/app-api/permission/**,/admin-api/permission/*/**
+          filters:
+            - StripPrefix=2
+logging:
+  level:
+    root: info
