@@ -3,6 +3,8 @@ package com.auth.cloud.i18n.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Locale;
+
 /**
  * 国际化配置项
  *
@@ -15,6 +17,10 @@ public class MessageSourceProperties {
 
     // 基础文件名
     private String basename = "message";
+
+    private String localeParamName = "lang";
+
+    private Locale defaultLocale = Locale.SIMPLIFIED_CHINESE;
 
     // 默认编码
     private String defaultEncoding = "UTF-8";

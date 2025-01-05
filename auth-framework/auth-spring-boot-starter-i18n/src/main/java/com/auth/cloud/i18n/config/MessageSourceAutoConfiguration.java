@@ -1,11 +1,20 @@
 package com.auth.cloud.i18n.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.Locale;
 
 /**
@@ -15,28 +24,40 @@ import java.util.Locale;
  * @date 2024/01/03
  */
 @Configuration
-// 将与配置文件绑定好的某个类注入到容器中，使其生效
 @EnableConfigurationProperties(MessageSourceProperties.class)
-public class MessageSourceAutoConfiguration {
+public class MessageSourceAutoConfiguration implements WebMvcConfigurer {
 
+    // 与配置文件绑定的配置类
     private final MessageSourceProperties messageSourceProperties;
 
     // 构建该自动配置类时将与配置文件绑定的配置类作为入参传递进去
     public MessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
+        if (messageSourceProperties == null) {
+            throw new IllegalArgumentException("MessageSourceProperties cannot be null");
+        }
         this.messageSourceProperties = messageSourceProperties;
     }
 
+    /**
+     * 创建一个 ResourceBundleMessageSource 实例
+     *
+     * @return ResourceBundleMessageSource 实例，用于处理国际化消息
+     */
     @Bean
-    public ResourceBundleMessageSource  messageSource() {
-        Locale.setDefault(Locale.CHINA);
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource ();
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        // 设置消息源的默认编码
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());
         // 设置是否回退到系统本地
         messageSource.setFallbackToSystemLocale(false);
         // 设置是否使用代码作为默认消息
         messageSource.setUseCodeAsDefaultMessage(messageSourceProperties.isUseCodeAsDefaultMessage());
         //设置国际化文件存储路径和名称    i18n目录，messages文件名
-        messageSource.setBasename(messageSourceProperties.getBasename());
+        String basename = messageSourceProperties.getBasename();
+        if (basename == null || basename.isEmpty()) {
+            throw new IllegalArgumentException("Basename cannot be null or empty");
+        }
+        messageSource.setBasename(basename);
         return messageSource;
     }
 
