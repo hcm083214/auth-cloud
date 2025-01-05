@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+     com.auth.cloud.security.config.SecurityConfiguration,\
+     com.auth.cloud.security.config.SecurityAutoConfiguration

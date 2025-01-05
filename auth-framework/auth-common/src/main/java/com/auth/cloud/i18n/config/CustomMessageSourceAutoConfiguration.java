@@ -1,21 +1,11 @@
 package com.auth.cloud.i18n.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
-import java.util.Locale;
 
 /**
  * Spring 中的国际化使用
@@ -25,13 +15,13 @@ import java.util.Locale;
  */
 @Configuration
 @EnableConfigurationProperties(MessageSourceProperties.class)
-public class MessageSourceAutoConfiguration implements WebMvcConfigurer {
+public class CustomMessageSourceAutoConfiguration implements WebMvcConfigurer {
 
     // 与配置文件绑定的配置类
     private final MessageSourceProperties messageSourceProperties;
 
     // 构建该自动配置类时将与配置文件绑定的配置类作为入参传递进去
-    public MessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
+    public CustomMessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
         if (messageSourceProperties == null) {
             throw new IllegalArgumentException("MessageSourceProperties cannot be null");
         }
@@ -44,7 +34,8 @@ public class MessageSourceAutoConfiguration implements WebMvcConfigurer {
      * @return ResourceBundleMessageSource 实例，用于处理国际化消息
      */
     @Bean
-    public ResourceBundleMessageSource messageSource() {
+    @Primary
+    public ResourceBundleMessageSource customMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         // 设置消息源的默认编码
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());

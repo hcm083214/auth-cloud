@@ -8,6 +8,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author 黄灿民
+ * @date 2025/01/05
+ */
 @AutoConfiguration
 @MapperScan(value = "${auth.info.mapper-base-package}")
 public class MybatisAutoConfiguration {
@@ -17,7 +21,8 @@ public class MybatisAutoConfiguration {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));//如果配置多个插件,切记分页最后添加
+        //如果配置多个插件,切记分页最后添加
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
 

@@ -49,6 +49,7 @@
             <artifactId>auth-common</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
+
     </dependencies>
 
     <build>

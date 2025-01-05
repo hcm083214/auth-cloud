@@ -28,6 +28,7 @@
         <!--   工具类  -->
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <!--   接口文档    -->
         <springdoc.version>1.6.15</springdoc.version>
@@ -96,6 +97,11 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!--   接口文档    -->

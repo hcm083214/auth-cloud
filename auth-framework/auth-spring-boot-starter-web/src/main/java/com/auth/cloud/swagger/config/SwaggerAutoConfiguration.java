@@ -37,12 +37,11 @@ public class SwaggerAutoConfiguration {
     @Bean
     public OpenAPI createOpenApi(SwaggerProperties swaggerProperties) {
         Map<String, SecurityScheme> securitySchemas = buildSecuritySchemes();
-        OpenAPI openAPI = new OpenAPI()
+        return new OpenAPI()
                 .info(buldInfo(swaggerProperties))
                 // 接口安全配置
                 .components(new Components().securitySchemes(securitySchemas))
                 .addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
-        return openAPI;
     }
 
     /**

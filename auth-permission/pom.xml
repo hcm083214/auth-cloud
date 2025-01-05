@@ -17,18 +17,17 @@
         <!--  相关依赖  -->
         <dependency>
             <groupId>com.cloud.auth</groupId>
-            <artifactId>auth-common</artifactId>
-            <version>0.0.1-snapshot</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.cloud.auth</groupId>
             <artifactId>auth-spring-boot-starter-web</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
         <dependency>
             <groupId>com.cloud.auth</groupId>
             <artifactId>auth-spring-boot-starter-mybatis</artifactId>
+            <version>0.0.1-snapshot</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cloud.auth</groupId>
+            <artifactId>auth-spring-boot-starter-security</artifactId>
             <version>0.0.1-snapshot</version>
         </dependency>
 
