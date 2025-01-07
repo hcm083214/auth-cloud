@@ -11,7 +11,7 @@ import java.util.Locale;
  * @author 黄灿民
  * @date 2024/01/17
  */
-@ConfigurationProperties("i18n")
+@ConfigurationProperties("auth.i18n")
 @Data
 public class MessageSourceProperties {
 

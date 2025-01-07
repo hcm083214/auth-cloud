@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Spring 中的国际化使用
@@ -15,13 +14,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableConfigurationProperties(MessageSourceProperties.class)
-public class CustomMessageSourceAutoConfiguration implements WebMvcConfigurer {
+public class MessageSourceAutoConfiguration {
 
     // 与配置文件绑定的配置类
     private final MessageSourceProperties messageSourceProperties;
 
     // 构建该自动配置类时将与配置文件绑定的配置类作为入参传递进去
-    public CustomMessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
+    public MessageSourceAutoConfiguration(MessageSourceProperties messageSourceProperties) {
         if (messageSourceProperties == null) {
             throw new IllegalArgumentException("MessageSourceProperties cannot be null");
         }
@@ -35,7 +34,7 @@ public class CustomMessageSourceAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean
     @Primary
-    public ResourceBundleMessageSource customMessageSource() {
+    public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         // 设置消息源的默认编码
         messageSource.setDefaultEncoding(messageSourceProperties.getDefaultEncoding());

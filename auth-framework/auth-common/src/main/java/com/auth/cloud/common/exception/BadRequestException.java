@@ -1,6 +1,6 @@
 package com.auth.cloud.common.exception;
 
-import com.auth.cloud.common.exception.enums.GlobalCodeConstants;
+import com.auth.cloud.common.enums.GlobalCodeConstants;
 
 /**
  * @author 黄灿民

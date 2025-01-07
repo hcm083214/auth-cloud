@@ -1,7 +1,6 @@
 package com.auth.cloud.common.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.auth.cloud.common.pojo.CommonResult;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,9 @@ import java.io.PrintWriter;
  * @date 2025/01/05
  */
 public class ResponseHandler {
-    // 定义响应的内容类型为JSON格式，字符集为UTF-8
+    /**
+     * 定义响应的内容类型为JSON格式，字符集为UTF-8
+     */
     private static final String CONTENT_TYPE = "application/json;charset=utf-8";
 
     /**

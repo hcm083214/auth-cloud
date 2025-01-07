@@ -1,8 +1,8 @@
 package com.auth.cloud.web.handler;
 
 import com.auth.cloud.common.exception.BadRequestException;
-import com.auth.cloud.common.exception.ErrorCode;
-import com.auth.cloud.common.exception.enums.GlobalCodeConstants;
+import com.auth.cloud.common.pojo.GlobalCode;
+import com.auth.cloud.common.enums.GlobalCodeConstants;
 import com.auth.cloud.common.pojo.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -20,7 +20,7 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    private ErrorCode BAD_REQUEST = GlobalCodeConstants.BAD_REQUEST;
+    private GlobalCode BAD_REQUEST = GlobalCodeConstants.BAD_REQUEST;
 
     @ExceptionHandler(BadRequestException.class)
     public CommonResult<?> handleBadRequestException(BadRequestException e) {

@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-     com.auth.cloud.i18n.config.CustomMessageSourceAutoConfiguration,\
-     com.auth.cloud.i18n.config.I18nAutoConfiguration
+     com.auth.cloud.i18n.config.MessageSourceAutoConfiguration,\
+     com.auth.cloud.i18n.config.SecurityAutoConfiguration

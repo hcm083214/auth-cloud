@@ -32,8 +32,6 @@ import javax.validation.constraints.NotNull;
 @Tag(name = "权限管理后台 - 角色", description = "角色设计相关接口")
 public class RoleController {
 
-    @Autowired
-    private I18n i18n;
 
     @Autowired
     private RoleService roleService;

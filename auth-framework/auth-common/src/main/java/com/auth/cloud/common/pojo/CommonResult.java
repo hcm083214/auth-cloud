@@ -1,6 +1,6 @@
 package com.auth.cloud.common.pojo;
 
-import com.auth.cloud.common.exception.enums.GlobalCodeConstants;
+import com.auth.cloud.common.enums.GlobalCodeConstants;
 import com.auth.cloud.i18n.core.I18nUtil;
 import lombok.Data;
 

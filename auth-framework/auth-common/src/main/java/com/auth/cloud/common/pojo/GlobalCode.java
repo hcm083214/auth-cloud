@@ -1,14 +1,13 @@
-package com.auth.cloud.common.exception;
+package com.auth.cloud.common.pojo;
 
 
 import com.auth.cloud.i18n.core.I18nUtil;
-import lombok.Data;
 
 /**
  * @author 黄灿民
  * @date 2024/01/03
  */
-public class ErrorCode {
+public class GlobalCode {
     public Integer code;
     public String message;
 
@@ -16,7 +15,7 @@ public class ErrorCode {
         return I18nUtil.get(message);
     }
 
-    public ErrorCode(Integer code, String message) {
+    public GlobalCode(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

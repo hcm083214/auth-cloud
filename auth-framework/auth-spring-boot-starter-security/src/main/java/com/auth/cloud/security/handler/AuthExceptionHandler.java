@@ -1,6 +1,6 @@
 package com.auth.cloud.security.handler;
 
-import com.auth.cloud.common.exception.enums.GlobalCodeConstants;
+import com.auth.cloud.common.enums.GlobalCodeConstants;
 import com.auth.cloud.common.handler.ResponseHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,9 +20,17 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class AuthExceptionHandler implements AuthenticationEntryPoint {
+    /**
+     * 认证失败处理
+     *
+     * @param request        HttpServletRequest
+     * @param response       HttpServletResponse
+     * @param authException  AuthenticationException
+     * @throws IOException IOException
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
+                         AuthenticationException authException){
         if (authException != null) {
             log.error("AuthExceptionHandler ---> commence,认证失败: {}", authException.getClass().getName());
         } else {
