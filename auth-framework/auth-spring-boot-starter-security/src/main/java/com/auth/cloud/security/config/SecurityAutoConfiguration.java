@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -61,9 +63,20 @@ public class SecurityAutoConfiguration {
                 .accessDeniedHandler(accessDeniedHandler) // 配置访问拒绝时的处理
                 .and()
                 .csrf().disable() // 禁用CSRF保护，适用于无状态认证
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 配置会话管理策略为无状态
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 配置会话管理策略为无状态
+                .and()
+                // 自定义登录页面
+                .formLogin().loginPage("/login") .permitAll()
+                // 注销功能对所有人开放
+                .and().logout().permitAll();
+
         // 在UsernamePasswordAuthenticationFilter之前添加自定义的Token认证过滤器
         httpSecurity.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build(); // 构建并返回配置的过滤器链
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return  new BCryptPasswordEncoder();
     }
 }

@@ -14,6 +14,7 @@
         <module>auth-gateway</module>
         <module>auth-grant</module>
         <module>auth-permission</module>
+        <module>auth-authentication</module>
     </modules>
 
     <name>${project.artifactId}</name>
