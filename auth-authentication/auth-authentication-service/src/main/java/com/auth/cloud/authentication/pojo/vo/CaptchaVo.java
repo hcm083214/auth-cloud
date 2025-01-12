@@ -11,5 +11,5 @@ public class CaptchaVo {
     /**
      * 验证码Id
      */
-    private Long captchaId;
+    private String captchaId;
 }

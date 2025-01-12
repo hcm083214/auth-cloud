@@ -32,7 +32,7 @@ public class MessageSourceAutoConfiguration {
      *
      * @return ResourceBundleMessageSource 实例，用于处理国际化消息
      */
-    @Bean
+    @Bean(name = "customMessageSource")
     @Primary
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

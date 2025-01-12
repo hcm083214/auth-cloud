@@ -17,6 +17,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.cloud.auth</groupId>
             <artifactId>auth-spring-boot-starter-security</artifactId>
@@ -31,6 +32,11 @@
             <groupId>com.cloud.auth</groupId>
             <artifactId>auth-spring-boot-starter-web</artifactId>
             <version>0.0.1-snapshot</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
         </dependency>
     </dependencies>
 

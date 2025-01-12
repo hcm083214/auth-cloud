@@ -6,7 +6,6 @@ package com.auth.cloud.authentication.service;
  */
 public interface CaptchaService {
     String getCaptcha();
-    boolean checkCaptcha(Long captchaId);
-    void clearCaptcha();
+    boolean checkCaptcha(String captchaId);
     void clearCaptcha(Long captchaId);
 }

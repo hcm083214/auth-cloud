@@ -5,9 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -37,9 +42,12 @@ public class SecurityAutoConfiguration {
      * 定义无需认证即可访问的路径
      */
     private final String[] allowPaths = {
-            "/favicon.ico",
-            "/login",
-            "/logout",
+            "/login", "/register", "/captcha/image", "/swagger-ui.html","/login-third-party","/i18n/all",
+            "/swagger-ui/*",
+            "/swagger-resources/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/webjars/**"
     };
 
     /**
@@ -65,10 +73,8 @@ public class SecurityAutoConfiguration {
                 .csrf().disable() // 禁用CSRF保护，适用于无状态认证
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 配置会话管理策略为无状态
                 .and()
-                // 自定义登录页面
-                .formLogin().loginPage("/login") .permitAll()
-                // 注销功能对所有人开放
-                .and().logout().permitAll();
+                // 禁用表单登录,使用json数据格式进行登录认证
+                .formLogin().disable(); //
 
         // 在UsernamePasswordAuthenticationFilter之前添加自定义的Token认证过滤器
         httpSecurity.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -76,7 +82,22 @@ public class SecurityAutoConfiguration {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = "123456";
+        String encodedPassword = encoder.encode(rawPassword);
+        System.out.println("Encoded Password: " + encodedPassword);
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
     }
 }

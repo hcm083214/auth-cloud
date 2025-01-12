@@ -14,4 +14,6 @@ public class LoginUserReqVo {
     private String password;
 
     private String code;
+
+    private String captchaId;
 }

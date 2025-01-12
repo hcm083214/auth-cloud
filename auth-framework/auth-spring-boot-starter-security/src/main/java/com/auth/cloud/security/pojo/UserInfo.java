@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class UserInfo<T> implements UserDetails {
+public class UserInfo implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -45,9 +45,9 @@ public class UserInfo<T> implements UserDetails {
     /**
      * 用户信息
      */
-    private T user;
+    private User user;
 
-    public UserInfo(T user, List<String> permissions) {
+    public UserInfo(User user, List<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
@@ -59,31 +59,31 @@ public class UserInfo<T> implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return user.getUserName();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

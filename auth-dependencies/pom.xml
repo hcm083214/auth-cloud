@@ -29,6 +29,8 @@
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <fastjson.version>1.2.83</fastjson.version>
+        <jwt.token.version>8.16</jwt.token.version>
+        <hutool.version>5.8.35</hutool.version>
 
         <!--   接口文档    -->
         <springdoc.version>1.6.15</springdoc.version>
@@ -102,6 +104,18 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!--JWT，用于登录认证-->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${jwt.token.version}</version>
             </dependency>
 
             <!--   接口文档    -->
