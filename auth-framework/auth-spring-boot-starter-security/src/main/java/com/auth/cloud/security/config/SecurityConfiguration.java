@@ -3,10 +3,13 @@ package com.auth.cloud.security.config;
 import com.auth.cloud.security.filter.TokenAuthenticationFilter;
 import com.auth.cloud.security.handler.AccessExceptionHandler;
 import com.auth.cloud.security.handler.AuthExceptionHandler;
+import com.auth.cloud.security.service.DefaultUserDetailsService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -44,5 +47,11 @@ public class SecurityConfiguration {
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public UserDetailsService defaultUserDetailsService() {
+        return new DefaultUserDetailsService();
     }
 }
